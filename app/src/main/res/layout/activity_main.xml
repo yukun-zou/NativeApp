@@ -6,13 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/mannequin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.533"
+        app:srcCompat="@drawable/mannequin" />
+
+    <ImageView
+        android:id="@+id/hat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/hat" />
+
+    <ImageView
+        android:id="@+id/hoodie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toBottomOf="@+id/hat"
+        app:layout_constraintVertical_bias="0.169"
+        app:srcCompat="@drawable/hoodie" />
+
+    <ImageView
+        android:id="@+id/trousers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.90"
+        app:srcCompat="@drawable/trousers" />
+
+    <ImageView
+        android:id="@+id/umbrella"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintStart_toEndOf="@+id/mannequin"
+        app:layout_constraintTop_toBottomOf="@+id/hat"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/umbrella" />
+
+    <ImageView
+        android:id="@+id/shorts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.66"
+        app:srcCompat="@drawable/shorts" />
+
+    <ImageView
+        android:id="@+id/tshirt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.29"
+        app:srcCompat="@drawable/tshirt" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.262"
+        app:srcCompat="@drawable/winter_jacket" />
+
+    <ImageView
+        android:id="@+id/scarf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/mannequin"
+        app:layout_constraintEnd_toEndOf="@+id/mannequin"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="@+id/mannequin"
+        app:layout_constraintTop_toTopOf="@+id/mannequin"
+        app:layout_constraintVertical_bias="0.174"
+        app:srcCompat="@drawable/scarf" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
