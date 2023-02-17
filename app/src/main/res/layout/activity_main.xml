@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.533"
+        app:layout_constraintVertical_bias="0.268"
         app:srcCompat="@drawable/mannequin" />
 
     <ImageView
@@ -26,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="@+id/mannequin"
         app:layout_constraintTop_toTopOf="@+id/mannequin"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.509"
         app:srcCompat="@drawable/hat" />
 
     <ImageView
@@ -111,5 +112,78 @@
         app:layout_constraintTop_toTopOf="@+id/mannequin"
         app:layout_constraintVertical_bias="0.174"
         app:srcCompat="@drawable/scarf" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/slider"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/slider_text"
+        android:stepSize="1.0"
+        android:valueFrom="0.0"
+        android:valueTo="24.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.834"
+        app:values="@array/initial_slider_values"
+        app:thumbColor="@color/white"
+        app:tickVisible="false"
+        app:trackColorInactive="@color/slider_track"
+        app:trackColorActive="@color/slider_track_active"/>
+
+    <TextView
+        android:id="@+id/currentCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_city"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022"/>
+
+    <TextView
+        android:id="@+id/cityIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cityIndicator"
+        android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentCity"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/plus"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/currentCity"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/plus" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="10dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toEndOf="@+id/currentCity"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/settings_dots_vertical" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
