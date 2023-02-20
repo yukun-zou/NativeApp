@@ -8,7 +8,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val weather = Weather()
-        weather.clothingAlgorithm()
+        weather.clothingAlgorithm(8,18)
 
     }
 }
