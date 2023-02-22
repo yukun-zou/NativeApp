@@ -52,11 +52,11 @@ class Weather{
         }
     }
 
-    suspend fun clothingAlgorithm(start: Int, end: Int): Array<String> {
+    suspend fun clothingAlgorithm(start: Int, end: Int, lat:Int, long: Int, storage: Storage): Array<String> {
 
-        val locationResponse = getLocationAPI("Stockholm")
-        val lat = locationResponse.getJSONArray("results").getJSONObject(0).getString("latitude")
-        val long = locationResponse.getJSONArray("results").getJSONObject(0).getString("longitude")
+//        val locationResponse = getLocationAPI()
+//        val lat = locationResponse.getJSONArray("results").getJSONObject(0).getString("latitude")
+//        val long = locationResponse.getJSONArray("results").getJSONObject(0).getString("longitude")
         val weatherResponse = getWeatherAPI(lat.toString(), long.toString())
         val temperature =
             weatherResponse.getJSONObject("hourly").getJSONArray("apparent_temperature")
@@ -72,19 +72,18 @@ class Weather{
             }
         }
         var clothingType: String
-        var umbrella: Boolean
-        if (minTemp < 0) {
+        if (minTemp < storage.freezing) {
             clothingType = "freezing"
-        } else if (minTemp < 10) {
+        } else if (minTemp < storage.cold) {
             clothingType = "cold"
-        } else if (minTemp < 15) {
+        } else if (minTemp < storage.comfortable) {
             clothingType = "comfortable"
-        } else if (minTemp < 23) {
+        } else if (minTemp < storage.warm) {
             clothingType = "warm"
         } else {
             clothingType = "hot"
         }
-        umbrella = (maxPre > 0)
+        var umbrella: Boolean = (maxPre > 0)
         val array = Array(2) { "" }
         array[0] = clothingType
         array[1] = umbrella.toString()
