@@ -121,7 +121,7 @@ class Weather{
         )
         return wmoTable[code]
     }
-    private suspend fun getWeatherAPI(lat: String, long: String): JSONObject {
+    public suspend fun getWeatherAPI(lat: String, long: String): JSONObject {
         return withContext(Dispatchers.IO) {
             var address =
                 "https://api.open-meteo.com/v1/forecast?latitude=€LAT&longitude=€LONG&hourly=apparent_temperature,precipitation&current_weather=true"
