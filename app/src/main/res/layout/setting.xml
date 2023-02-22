@@ -13,11 +13,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="107dp"
+        android:onClick="closeSettingsActivity"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/close"
-        android:onClick="closeSettingsActivity" />
+        app:srcCompat="@drawable/close" />
 
     <TextView
         android:id="@+id/textView"

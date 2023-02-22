@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
+
     fun updateNavbar(storage: Storage){
         val currentCityIndex = storage.cities.keys.indexOf(storage.currentCity)
         val citiesSize = storage.cities.size
@@ -102,5 +103,12 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.cityIndicator).text = currentCityIndicator
     }
+
+    fun openChangingclothes(view: View) {
+        val intent = Intent(this, Changingactivity::class.java)
+        startActivity(intent)
+    }
+
+
 
 }
