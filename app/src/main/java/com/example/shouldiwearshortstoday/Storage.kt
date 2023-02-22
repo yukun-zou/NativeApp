@@ -13,13 +13,14 @@ class Storage(context: Context) {
     var cold: Int = 10
     var comfortable: Int = 15
     var warm: Int = 23
-    var hat: String = "@drawable/hat"
-    var scarf: String = "@drawable/scarf"
-    var hoodie: String = "@drawable/hoodie"
-    var tshirt: String = "@drawable/tshirt"
-    var winterJacket: String = "@drawable/winter_jacket"
-    var trousers: String = "@drawable/trousers"
-    var shorts: String = "@drawable/shorts"
+    var hat: Int = R.drawable.hat
+    var scarf: Int = R.drawable.scarf
+    var hoodie: Int = R.drawable.hoodie
+    var tshirt: Int = R.drawable.tshirt
+    var winterJacket: Int = R.drawable.winter_jacket
+    var trousers: Int = R.drawable.trousers
+    var shorts: Int = R.drawable.shorts
+    var umbrella: Int = R.drawable.umbrella
     var cities = mutableMapOf<String, Array<Int>>("Stockholm" to arrayOf(60, 18))
     fun getValuesFromStorage() {
         currentCity = preferences.getString("currentCity", "Stockholm").toString()
@@ -29,13 +30,14 @@ class Storage(context: Context) {
         cold = preferences.getInt("cold", 10)
         comfortable = preferences.getInt("comfortable", 15)
         warm = preferences.getInt("warm", 23)
-        hat = preferences.getString("hat", "@drawable/hat").toString()
-        scarf = preferences.getString("scarf", "@drawable/scarf").toString()
-        hoodie = preferences.getString("hoodie", "@drawable/hoodie").toString()
-        tshirt = preferences.getString("tshirt", "@drawable/tshirt").toString()
-        winterJacket = preferences.getString("winterJacket", "@drawable/winterJacket").toString()
-        trousers = preferences.getString("trousers", "@drawable/trousers").toString()
-        shorts = preferences.getString("shorts", "@drawable/shorts").toString()
+        hat = preferences.getInt("hat", R.drawable.hat)
+        scarf = preferences.getInt("scarf", R.drawable.scarf)
+        hoodie = preferences.getInt("hoodie", R.drawable.hoodie)
+        tshirt = preferences.getInt("tshirt", R.drawable.tshirt)
+        winterJacket = preferences.getInt("winterJacket", R.drawable.winter_jacket)
+        trousers = preferences.getInt("trousers", R.drawable.trousers)
+        shorts = preferences.getInt("shorts", R.drawable.shorts)
+        umbrella = preferences.getInt("shorts", R.drawable.umbrella)
         stringToCities(preferences.getString("cities", "Stockholm,60,18").toString())
     }
     fun stringToCities(string: String){
@@ -94,6 +96,42 @@ class Storage(context: Context) {
         currentCity = cities.keys.elementAt(currentCityIndex)
         val edit = preferences.edit()
         edit.putString("currentCity", currentCity)
+        edit.apply()
+    }
+    fun changeHat(src: Int){
+        hat = src
+        val edit = preferences.edit()
+        edit.putInt("hat", hat)
+        edit.apply()
+    }
+    fun changeTshirt(src: Int){
+        tshirt = src
+        val edit = preferences.edit()
+        edit.putInt("tshirt", tshirt)
+        edit.apply()
+    }
+    fun changeHoodie(src: Int){
+        hoodie = src
+        val edit = preferences.edit()
+        edit.putInt("hoodie", hoodie)
+        edit.apply()
+    }
+    fun changeWinterJacket(src: Int){
+        winterJacket = src
+        val edit = preferences.edit()
+        edit.putInt("winterJacket", winterJacket)
+        edit.apply()
+    }
+    fun changeTrousers(src: Int){
+        trousers = src
+        val edit = preferences.edit()
+        edit.putInt("trousers", trousers)
+        edit.apply()
+    }
+    fun changeShorts(src: Int){
+        shorts = src
+        val edit = preferences.edit()
+        edit.putInt("shorts", shorts)
         edit.apply()
     }
 }
