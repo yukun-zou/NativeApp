@@ -22,6 +22,7 @@
         android:id="@+id/hat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/mannequin"
         app:layout_constraintEnd_toEndOf="@+id/mannequin"
         app:layout_constraintHorizontal_bias="0.493"
@@ -47,6 +48,7 @@
         android:id="@+id/trousers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/mannequin"
         app:layout_constraintEnd_toEndOf="@+id/mannequin"
         app:layout_constraintStart_toStartOf="@+id/mannequin"
@@ -58,6 +60,7 @@
         android:id="@+id/umbrella"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/mannequin"
         app:layout_constraintEnd_toEndOf="@+id/mannequin"
         app:layout_constraintStart_toEndOf="@+id/mannequin"
@@ -91,9 +94,10 @@
         app:srcCompat="@drawable/tshirt" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/winterJacket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/mannequin"
         app:layout_constraintEnd_toEndOf="@+id/mannequin"
         app:layout_constraintStart_toStartOf="@+id/mannequin"
@@ -105,6 +109,7 @@
         android:id="@+id/scarf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/mannequin"
         app:layout_constraintEnd_toEndOf="@+id/mannequin"
         app:layout_constraintHorizontal_bias="0.46"
