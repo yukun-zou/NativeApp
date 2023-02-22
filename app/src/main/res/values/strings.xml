@@ -3,4 +3,5 @@
     <string name="slider_text">Slider to choose a time frame</string>
     <string name="current_city">Stockholm</string>
     <string name="cityIndicator">X</string>
+    <string name="default_time">Default Time</string>
 </resources>
