@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
-
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.OnSwipe
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.google.android.material.slider.RangeSlider
 import kotlinx.coroutines.*
 import kotlin.math.abs
@@ -21,24 +20,46 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity() {
     private var mVelocityTracker: VelocityTracker? = null
     private lateinit var storage : Storage
+    private lateinit var layout: RelativeLayout
+    private  lateinit var weather: Weather
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         storage = Storage(this)
-        val weather = Weather()
+        weather = Weather()
         initValues()
-        getWeather(weather)
+        getWeather()
         val slider = findViewById<RangeSlider>(R.id.slider)
         slider.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
-            getWeather(
-                weather
-            )
+            getWeather()
         })
+        layout = findViewById(R.id.relativeLayout)
+        layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                storage.swipeLeft()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                storage.swipeRight()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
 
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+
+            }
+        })
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getWeather(weather: Weather) {
+    fun getWeather() {
         val weatherCoroutine = lifecycleScope.async {
             val startEnd = findViewById<RangeSlider>(R.id.slider).values
             val coord = storage.cities.get(storage.currentCity)
@@ -49,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         weatherCoroutine.invokeOnCompletion {
             setClothing(weatherCoroutine.getCompleted())
         }
+
     }
 
     fun initValues() {
@@ -138,58 +160,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, Changingactivity::class.java)
         startActivity(intent)
     }
-    override fun onTouchEvent(event: MotionEvent): Boolean {
 
-        when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-                // Reset the velocity tracker back to its initial state.
-                mVelocityTracker?.clear()
-                // If necessary retrieve a new VelocityTracker object to watch the
-                // velocity of a motion.
-                mVelocityTracker = mVelocityTracker ?: VelocityTracker.obtain()
-                // Add a user's movement to the tracker.
-                mVelocityTracker?.addMovement(event)
-            }
-            MotionEvent.ACTION_MOVE -> {
-                mVelocityTracker?.apply {
-                    val pointerId: Int = event.getPointerId(event.actionIndex)
-                    addMovement(event)
-                    // When you want to determine the velocity, call
-                    // computeCurrentVelocity(). Then call getXVelocity()
-                    // and getYVelocity() to retrieve the velocity for each pointer ID.
-                    computeCurrentVelocity(10)
-                    // Log velocity of pixels per second
-                    // Best practice to use VelocityTrackerCompat where possible.
-                    val xVel = getXVelocity(pointerId)
-                    val yVel = getYVelocity(pointerId)
-                    if(abs(xVel)> abs(yVel) && abs(xVel)> 10 && abs(yVel) > 10){
-                        if(xVel> 0){
-                            storage.swipeRight()
-                            updateNavbar()
-                        }
-                        else{
-                            storage.swipeLeft()
-                            updateNavbar()
-                        }
-                    }
-                    else{
-                        if(yVel> 0){
-
-                        }
-                        else{
-
-                        }
-                    }
-                }
-            }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                // Return a VelocityTracker object back to be re-used by others.
-                mVelocityTracker?.recycle()
-                mVelocityTracker = null
-            }
-        }
-        return true
-    }
     fun openCityActivity(view: View) {
         val intent = Intent(this, CityActivity::class.java)
         startActivity(intent)

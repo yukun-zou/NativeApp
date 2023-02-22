@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="0dp">
+
+
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/mannequin"
         android:layout_width="wrap_content"
@@ -173,27 +185,27 @@
         android:id="@+id/plus"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="openCityActivity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/currentCity"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
-        android:onClick="openCityActivity"
         app:srcCompat="@drawable/plus" />
 
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="10dp"
         android:layout_height="40dp"
+        android:onClick="openSettingsActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
-        app:layout_constraintStart_toEndOf="@+id/currentCity"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/settings_dots_vertical"
-        android:onClick="openSettingsActivity" />
+        app:srcCompat="@drawable/settings_dots_vertical" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
