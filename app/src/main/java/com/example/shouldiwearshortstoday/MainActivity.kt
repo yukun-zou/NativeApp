@@ -25,18 +25,61 @@ import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
+    private var mVelocityTracker: VelocityTracker? = null
+    private lateinit var storage : Storage
+    private lateinit var layout: RelativeLayout
+    private  lateinit var weather: Weather
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val storage = Storage(this)
-        val weather = Weather()
-        getValues(storage)
-        getWeather(weather, storage)
+        storage = Storage(this)
+        weather = Weather()
+        initValues()
+        getWeather()
         val slider = findViewById<RangeSlider>(R.id.slider)
-        slider.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser -> getWeather(weather, storage) })
+        slider.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
+            getWeather()
+        })
+        layout = findViewById(R.id.relativeLayout)
+        layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                storage.swipeLeft()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                storage.swipeRight()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+
+            }
+        })
+        getCurrentWeather()
     }
+
+    fun getCurrentWeather(){
+        val weatherCoroutine = lifecycleScope.async {
+            val coord = storage.cities.get(storage.currentCity)
+            val lat = coord!![0]
+            val long = coord!![1]
+            weather.getCurrentWeather(lat, long)
+        }
+        weatherCoroutine.invokeOnCompletion {
+            val c =weatherCoroutine.getCompleted()
+        }
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getWeather(weather: Weather, storage: Storage){
+    fun getWeather() {
         val weatherCoroutine = lifecycleScope.async {
             val startEnd = findViewById<RangeSlider>(R.id.slider).values
             val coord = storage.cities.get(storage.currentCity)
@@ -44,19 +87,35 @@ class MainActivity : AppCompatActivity() {
             val long = coord!![1]
             weather.clothingAlgorithm(startEnd[0].toInt(), startEnd[1].toInt(), lat, long, storage)
         }
-        weatherCoroutine.invokeOnCompletion{
+        weatherCoroutine.invokeOnCompletion {
             setClothing(weatherCoroutine.getCompleted())
         }
+
     }
-    fun getValues(storage: Storage){
+
+    fun initValues() {
         storage.getValuesFromStorage()
         val slider = findViewById<RangeSlider>(R.id.slider)
-        slider.values = listOf(storage.defaultStart.toFloat(),storage.defaultEnd.toFloat())
+        slider.values = listOf(storage.defaultStart.toFloat(), storage.defaultEnd.toFloat())
         findViewById<TextView>(R.id.currentCity).text = storage.currentCity
-        updateNavbar(storage)
+        updateNavbar()
+        updateClothing()
     }
+
+    fun updateClothing() {
+        findViewById<ImageView>(R.id.hat).setImageResource(storage.hat)
+        findViewById<ImageView>(R.id.scarf).setImageResource(storage.scarf)
+        findViewById<ImageView>(R.id.tshirt).setImageResource(storage.tshirt)
+        findViewById<ImageView>(R.id.hoodie).setImageResource(storage.hoodie)
+        findViewById<ImageView>(R.id.winterJacket).setImageResource(storage.winterJacket)
+        findViewById<ImageView>(R.id.shorts).setImageResource(storage.shorts)
+        findViewById<ImageView>(R.id.trousers).setImageResource(storage.trousers)
+        findViewById<ImageView>(R.id.umbrella).setImageResource(storage.umbrella)
+    }
+
     fun setClothingToInvisible(): Array<ImageView> {
-        val clothes = arrayOf(findViewById<ImageView>(R.id.hat),
+        val clothes = arrayOf(
+            findViewById<ImageView>(R.id.hat),
             findViewById<ImageView>(R.id.scarf),
             findViewById<ImageView>(R.id.tshirt),
             findViewById<ImageView>(R.id.hoodie),
@@ -65,11 +124,12 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.trousers),
             findViewById<ImageView>(R.id.umbrella)
         )
-        for (element in clothes){
+        for (element in clothes) {
             element.visibility = View.INVISIBLE
         }
         return clothes
     }
+
     fun setClothing(weather: Array<String>) {
         val umbrella = weather[1]
         val tempType = weather[0]
@@ -96,6 +156,7 @@ class MainActivity : AppCompatActivity() {
             clothes[7].visibility = View.VISIBLE
         }
     }
+
     fun openSettingsActivity(view: View) {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -106,17 +167,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun updateNavbar(storage: Storage){
+    fun updateNavbar() {
         val currentCityIndex = storage.cities.keys.indexOf(storage.currentCity)
         val citiesSize = storage.cities.size
         var currentCityIndicator = ""
-        for (i in 0 until citiesSize){
+        for (i in 0 until citiesSize) {
             if (i == currentCityIndex)
                 currentCityIndicator += "x"
             else
                 currentCityIndicator += "-"
         }
         findViewById<TextView>(R.id.cityIndicator).text = currentCityIndicator
+        findViewById<TextView>(R.id.currentCity).text = storage.currentCity
     }
 
     fun openChangingclothes(view: View) {

@@ -16,7 +16,112 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class Weather{
-    public suspend fun getWeatherAPI(lat: String, long: String): JSONObject {
+    fun wmoInterpreter(code: Int):String{
+        val wmoTable = arrayOf(
+            "clear sky",
+            "clear sky",
+            "mainly clear",
+            "overcast",
+            "smoke",
+            "haze",
+            "dust",
+            "dust or sand",
+            "dust or sand whirl(s)",
+            "dust or sand storm in sight",
+            "mist",
+            "shallow fog",
+            "shallow fog",
+            "lighning visible, no thunder heard",
+            "precipitation in sight",
+            "precipitation in sight",
+            "precipitation in sight",
+            "thunderstorm without precipitation",
+            "squalls",
+            "funnel cloud(s)",
+            "drizzle",
+            "rain",
+            "snow",
+            "rain and snow or ice pellets",
+            "freezing drizzle",
+            "shower(s) of rain",
+            "shower(s) of snow",
+            "shower(s) of hail",
+            "fog or ice fog",
+            "thunderstorm",
+            "slight or moderate dust or sand storm (decreasing)",
+            "slight or moderate dust or sand storm (no change)",
+            "slight or moderate dust or sand storm (increasing)",
+            "severe dust or sand storm (decreasing)",
+            "severe dust or sand storm (no change)",
+            "severe dust or sand storm (increasing)",
+            "slight or moderate blowing of snow (below eye level)",
+            "heavy drifting snow (below eye level)",
+            "slight or moderate blowing of snow (above eye level)",
+            "heavy drifting snow (above eye level)",
+            "fog or ice fog at a distance",
+            "fog or ice fog in patche",
+            "fog",
+            "fog",
+            "fog",
+            "fog",
+            "fog",
+            "fog",
+            "depositing rime fog",
+            "depositing rime fog",
+            "drizzle",
+            "light drizzle",
+            "moderate drizzle",
+            "moderate drizzle",
+            "heavy drizzle",
+            "heavy drizzle",
+            "light freezing drizzle",
+            "heavy freezing drizzle",
+            "slight drizzle and rain",
+            "moderate or heavy drizzle and rain",
+            "rain",
+            "light rain",
+            "moderate rain",
+            "moderate rain",
+            "heavy rain",
+            "heavy rain",
+            "light freezing rain",
+            "heavy freezing rain",
+            "rain or drizzle with slight snow",
+            "rain or drizzle with moderate or heavy snow",
+            "snow",
+            "light snow",
+            "moderate snow",
+            "moderate snow",
+            "heavy snow",
+            "heavy snow",
+            "ice prisms",
+            "snow grains",
+            "isolated starlike snow crystals",
+            "ice pellets",
+            "light rain showers",
+            "moderate rain showers",
+            "heavy rain showers",
+            "showers of rain and snow mixed, slight",
+            "howers of rain and snow mixed, moderate or heavy",
+            "light snow showers",
+            "heavy snow showers",
+            "snow pallets",
+            "snow pallets",
+            "slight showers of hail",
+            "moderate or heavy showers of hail",
+            "slight rain",
+            "moderate or heavy rain",
+            "slight precipitation",
+            "moderate or heavy precipitation",
+            "thunderstorm",
+            "thunderstorm with slight hail",
+            "heavy thunderstorm",
+            "thunderstorm with dust or sand storm",
+            "thunderstorm with heavy hail",
+        )
+        return wmoTable[code]
+    }
+    private suspend fun getWeatherAPI(lat: String, long: String): JSONObject {
         return withContext(Dispatchers.IO) {
             var address =
                 "https://api.open-meteo.com/v1/forecast?latitude=€LAT&longitude=€LONG&hourly=apparent_temperature,precipitation&current_weather=true"
@@ -88,5 +193,12 @@ class Weather{
         array[0] = clothingType
         array[1] = umbrella.toString()
         return array
+    }
+    suspend fun getCurrentWeather(lat: Int, long: Int): Array<String>{
+        val weatherResponse = getWeatherAPI(lat.toString(), long.toString())
+        val temp = weatherResponse.getJSONObject("current_weather").getString("temperature")
+        val weatherCode = weatherResponse.getJSONObject("current_weather").getInt("weathercode")
+        val weatherCondition = wmoInterpreter(weatherCode)
+        return arrayOf(temp, weatherCondition)
     }
 }
