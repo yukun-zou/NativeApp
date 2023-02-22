@@ -66,8 +66,15 @@ class Storage(context: Context) {
         edit.putInt("defaultEnd", end)
         edit.apply()
     }
-    fun addCity(City: String, lat: Int, long: Int){
-        cities.put(City, arrayOf(lat, long))
+    fun addCity(city: String, lat: Int, long: Int){
+        cities.put(city, arrayOf(lat, long))
+        val citiesString = citiesToString()
+        val edit = preferences.edit()
+        edit.putString("cities", citiesString)
+        edit.apply()
+    }
+    fun deleteCity(city: String){
+        cities.remove(city)
         val citiesString = citiesToString()
         val edit = preferences.edit()
         edit.putString("cities", citiesString)
