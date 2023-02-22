@@ -194,6 +194,13 @@
         app:srcCompat="@drawable/settings_dots_vertical"
         android:onClick="openSettingsActivity" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
     <ImageView
         android:id="@+id/weather_button"
         android:layout_width="78dp"
@@ -204,6 +211,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/thermometer"
         android:onClick="openWeatherActivity" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

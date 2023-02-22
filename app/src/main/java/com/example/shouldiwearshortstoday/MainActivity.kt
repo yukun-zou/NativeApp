@@ -33,17 +33,10 @@ class MainActivity : AppCompatActivity() {
         getValues(storage)
         getWeather(weather, storage)
         val slider = findViewById<RangeSlider>(R.id.slider)
-        slider.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser ->
-            getWeather(
-                weather,
-                storage
-            )
-        })
+        slider.addOnChangeListener(RangeSlider.OnChangeListener { slider, value, fromUser -> getWeather(weather, storage) })
     }
-
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getWeather(weather: Weather, storage: Storage) {
+    fun getWeather(weather: Weather, storage: Storage){
         val weatherCoroutine = lifecycleScope.async {
             val startEnd = findViewById<RangeSlider>(R.id.slider).values
             val coord = storage.cities.get(storage.currentCity)
@@ -51,22 +44,19 @@ class MainActivity : AppCompatActivity() {
             val long = coord!![1]
             weather.clothingAlgorithm(startEnd[0].toInt(), startEnd[1].toInt(), lat, long, storage)
         }
-        weatherCoroutine.invokeOnCompletion {
+        weatherCoroutine.invokeOnCompletion{
             setClothing(weatherCoroutine.getCompleted())
         }
     }
-
-    fun getValues(storage: Storage) {
+    fun getValues(storage: Storage){
         storage.getValuesFromStorage()
         val slider = findViewById<RangeSlider>(R.id.slider)
-        slider.values = listOf(storage.defaultStart.toFloat(), storage.defaultEnd.toFloat())
+        slider.values = listOf(storage.defaultStart.toFloat(),storage.defaultEnd.toFloat())
         findViewById<TextView>(R.id.currentCity).text = storage.currentCity
         updateNavbar(storage)
     }
-
     fun setClothingToInvisible(): Array<ImageView> {
-        val clothes = arrayOf(
-            findViewById<ImageView>(R.id.hat),
+        val clothes = arrayOf(findViewById<ImageView>(R.id.hat),
             findViewById<ImageView>(R.id.scarf),
             findViewById<ImageView>(R.id.tshirt),
             findViewById<ImageView>(R.id.hoodie),
@@ -75,12 +65,11 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(R.id.trousers),
             findViewById<ImageView>(R.id.umbrella)
         )
-        for (element in clothes) {
+        for (element in clothes){
             element.visibility = View.INVISIBLE
         }
         return clothes
     }
-
     fun setClothing(weather: Array<String>) {
         val umbrella = weather[1]
         val tempType = weather[0]
@@ -107,7 +96,6 @@ class MainActivity : AppCompatActivity() {
             clothes[7].visibility = View.VISIBLE
         }
     }
-
     fun openSettingsActivity(view: View) {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -118,24 +106,28 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-        fun updateNavbar(storage: Storage) {
-            val currentCityIndex = storage.cities.keys.indexOf(storage.currentCity)
-            val citiesSize = storage.cities.size
-            var currentCityIndicator = ""
-            for (i in 0 until citiesSize) {
-                if (i == currentCityIndex)
-                    currentCityIndicator += "x"
-                else
-                    currentCityIndicator += "-"
-            }
-            findViewById<TextView>(R.id.cityIndicator).text = currentCityIndicator
+    fun updateNavbar(storage: Storage){
+        val currentCityIndex = storage.cities.keys.indexOf(storage.currentCity)
+        val citiesSize = storage.cities.size
+        var currentCityIndicator = ""
+        for (i in 0 until citiesSize){
+            if (i == currentCityIndex)
+                currentCityIndicator += "x"
+            else
+                currentCityIndicator += "-"
         }
+        findViewById<TextView>(R.id.cityIndicator).text = currentCityIndicator
+    }
 
-        fun openChangingclothes(view: View) {
-            val intent = Intent(this, Changingactivity::class.java)
-            startActivity(intent)
-        }
+    fun openChangingclothes(view: View) {
+        val intent = Intent(this, Changingactivity::class.java)
+        startActivity(intent)
+    }
 
+    fun openCityActivity(view: View) {
+        val intent = Intent(this, CityActivity::class.java)
+        startActivity(intent)
+    }
 
 
 }
