@@ -56,6 +56,19 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+        getCurrentWeather()
+    }
+
+    fun getCurrentWeather(){
+        val weatherCoroutine = lifecycleScope.async {
+            val coord = storage.cities.get(storage.currentCity)
+            val lat = coord!![0]
+            val long = coord!![1]
+            weather.getCurrentWeather(lat, long)
+        }
+        weatherCoroutine.invokeOnCompletion {
+            val c =weatherCoroutine.getCompleted()
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
