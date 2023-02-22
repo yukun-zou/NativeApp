@@ -49,7 +49,7 @@ class SettingsActivity : AppCompatActivity() {
             val cancelButton = popupView.findViewById<Button>(R.id.button_cancel)
 
             cancelButton.setOnClickListener {
-                // Dismiss the popup window
+
                 popupWindow.dismiss()
             }
 

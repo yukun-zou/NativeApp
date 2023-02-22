@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shouldiwearshortstoday">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
@@ -24,7 +26,7 @@
         </activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".Changingactivity" />
-
+        <activity android:name=".WeatherActivity" />
     </application>
 
 </manifest>
