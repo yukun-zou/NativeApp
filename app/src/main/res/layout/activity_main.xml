@@ -128,18 +128,18 @@
         android:stepSize="1.0"
         android:valueFrom="0.0"
         android:valueTo="24.0"
+        app:haloColor="@color/slider_halo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.834"
-        app:values="@array/initial_slider_values"
         app:thumbColor="@color/slider_thumb"
         app:tickVisible="false"
-        app:trackColorInactive="@color/slider_track"
         app:trackColorActive="@color/slider_track_active"
-        app:haloColor="@color/slider_halo"/>
+        app:trackColorInactive="@color/slider_track"
+        app:values="@array/initial_slider_values" />
 
     <TextView
         android:id="@+id/currentCity"
@@ -155,7 +155,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022"/>
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/cityIndicator"
@@ -179,6 +179,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
+        android:onClick="openCityActivity"
         app:srcCompat="@drawable/plus" />
 
     <ImageView
@@ -193,6 +194,13 @@
         app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/settings_dots_vertical"
         android:onClick="openSettingsActivity" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

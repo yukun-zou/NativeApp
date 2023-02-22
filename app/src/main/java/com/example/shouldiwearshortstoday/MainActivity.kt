@@ -190,4 +190,8 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+    fun openCityActivity(view: View) {
+        val intent = Intent(this, CityActivity::class.java)
+        startActivity(intent)
+    }
 }
