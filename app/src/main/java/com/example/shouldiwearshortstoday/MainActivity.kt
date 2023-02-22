@@ -70,5 +70,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
+    fun openChangingclothes(view: View) {
+        val intent = Intent(this, Changingactivity::class.java)
+        startActivity(intent)
+    }
+
 
 }
