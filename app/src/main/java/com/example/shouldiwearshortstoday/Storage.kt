@@ -105,6 +105,18 @@ class Storage(context: Context) {
         edit.putInt("hat", hat)
         edit.apply()
     }
+    fun changeScarf(src: Int){
+        scarf = src
+        val edit = preferences.edit()
+        edit.putInt("scarf", scarf)
+        edit.apply()
+    }
+    fun changeUmbrella(src: Int){
+        umbrella = src
+        val edit = preferences.edit()
+        edit.putInt("umbrella", umbrella)
+        edit.apply()
+    }
     fun changeTshirt(src: Int){
         tshirt = src
         val edit = preferences.edit()
