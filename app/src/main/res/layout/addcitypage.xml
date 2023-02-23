@@ -23,55 +23,33 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="78dp"
         android:layout_marginTop="16dp"
-        android:text="ChangingCity"
+        android:text="AddingCity"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/deleteButton"
-        android:layout_width="60dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/changeButton"
-        android:layout_width="41dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:onClick="changeActivity"
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="106dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_agenda" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Recycle"
-        android:layout_width="408dp"
-        android:layout_height="559dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="20dp"
-        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <ImageView
-        android:id="@+id/plusbutton"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="54dp"
-        android:visibility="gone"
-        android:onClick="AddActivity"
-        app:layout_constraintEnd_toStartOf="@+id/changeButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_plus"
-        tools:visibility="visible" />
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="113dp"
+        android:text="Confirm"
+        android:onClick="ConfirmActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

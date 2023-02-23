@@ -1,5 +1,6 @@
 package com.example.shouldiwearshortstoday
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.reflect.typeOf
+
 
 class CityActivity: AppCompatActivity() {
 
@@ -162,7 +164,7 @@ class CityActivity: AppCompatActivity() {
         val deleteButton:ImageView = findViewById(R.id.deleteButton);
         val plusButton:ImageView = findViewById((R.id.plusbutton));
         val text:TextView = findViewById(R.id.changCity)
-//        val checkbox = findViewById<CheckBox>(R.id.myCheckBox)
+        val checkbox = findViewById<CheckBox>(R.id.myCheckBox)
         if(deleteButton.visibility == View.GONE){
             deleteButton.visibility =View.VISIBLE
             plusButton.visibility = View.VISIBLE
@@ -180,4 +182,13 @@ class CityActivity: AppCompatActivity() {
     fun closeSettingsActivity(view: View) {
         finish()
     }
+
+
+    fun AddActivity(view: View){
+//        println(getCityCoordinates("Stockholm"))
+        val intent = Intent(this, CityAdd::class.java)
+        startActivity(intent)
+    }
+
+
 }
