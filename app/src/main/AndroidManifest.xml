@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".Changingactivity" />
-
+        <activity android:name=".CityActivity" />
         <activity android:name=".CityAdd" />
     </application>
 
