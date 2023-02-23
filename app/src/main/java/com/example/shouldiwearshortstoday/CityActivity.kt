@@ -179,7 +179,8 @@ class CityActivity: AppCompatActivity() {
 
 
     fun closeSettingsActivity(view: View) {
-        finish()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 
