@@ -10,10 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 class CityAdd: AppCompatActivity() {
-
+    private lateinit var storage : Storage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addcitypage)
+        storage = Storage(this)
     }
 
     fun closeSettingsActivity(view: View) {
@@ -37,7 +38,7 @@ class CityAdd: AppCompatActivity() {
             dialog.show()
         }
         else{
-
+            storage.addCity(editText.text.toString(),getCityCoordinates(editText.text.toString())!!.first.toInt(),getCityCoordinates(editText.text.toString())!!.second.toInt())
             val builder = AlertDialog.Builder(this)
             builder.setTitle("reminding")
             builder.setMessage("Adding success")

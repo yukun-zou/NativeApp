@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,7 +16,7 @@ class CityAdapter (private val dataset: List<CityData>
         val TitleText: TextView = view.findViewById(R.id.titleTextView)
         val ContentText:TextView = view.findViewById(R.id.descriptionTextView)
         val TempText:TextView = view.findViewById(R.id.tempTextView)
-        val checkBox: CheckBox = itemView.findViewById(R.id.myCheckBox)
+        val button:Button = view.findViewById(R.id.button3)
 
     }
 
@@ -35,10 +36,7 @@ class CityAdapter (private val dataset: List<CityData>
         val data = dataset[position]
         holder.TitleText.text = data.CityName
         holder.ContentText.text = data.WeatherCondition
-        holder.TempText.text = data.Temperature.toString()
-        holder.checkBox.isChecked = false
-        holder.checkBox.id = data.number
-        holder.checkBox.visibility = View.INVISIBLE
+        holder.TempText.text = data.Temperature
     }
 
 }

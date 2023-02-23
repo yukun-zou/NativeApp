@@ -161,18 +161,14 @@ class CityActivity: AppCompatActivity() {
     }
 
     fun changeActivity(view: View){
-        val deleteButton:ImageView = findViewById(R.id.deleteButton);
         val plusButton:ImageView = findViewById((R.id.plusbutton));
         val text:TextView = findViewById(R.id.changCity)
-        val checkbox = findViewById<CheckBox>(R.id.myCheckBox)
-        if(deleteButton.visibility == View.GONE){
-            deleteButton.visibility =View.VISIBLE
+        if(plusButton.visibility == View.GONE){
             plusButton.visibility = View.VISIBLE
             text.visibility = View.GONE
 
         }
         else{
-            deleteButton.visibility =View.GONE;
             plusButton.visibility = View.GONE;
             text.visibility = View.VISIBLE;
         }

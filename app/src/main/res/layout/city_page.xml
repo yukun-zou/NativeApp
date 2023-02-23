@@ -30,18 +30,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/deleteButton"
-        android:layout_width="60dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete"
-        tools:visibility="visible" />
-
-    <ImageView
         android:id="@+id/changeButton"
         android:layout_width="41dp"
         android:layout_height="50dp"
