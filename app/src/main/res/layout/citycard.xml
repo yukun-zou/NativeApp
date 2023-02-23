@@ -6,9 +6,9 @@
     app:cardUseCompatPadding="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="83dp"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -25,9 +25,35 @@
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="35dp"
             android:text="Description"
             android:textSize="14sp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tempTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="220dp"
+            android:layout_marginTop="13dp"
+            android:textSize="23sp"
+            android:text="Temp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/myCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="305dp"
+            android:layout_marginTop="13dp"
+            android:text=""
+            android:visibility="invisible" />
+
+
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

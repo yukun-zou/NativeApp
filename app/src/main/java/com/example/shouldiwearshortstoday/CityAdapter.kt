@@ -4,16 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CityAdapter (
-    private val context: Context, private val dataset: List<CityData>
+class CityAdapter (private val dataset: List<CityData>
     ):RecyclerView.Adapter<CityAdapter.ItemViewHolder>(){
     class ItemViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         val TitleText: TextView = view.findViewById(R.id.titleTextView)
         val ContentText:TextView = view.findViewById(R.id.descriptionTextView)
+        val TempText:TextView = view.findViewById(R.id.tempTextView)
+        val checkBox: CheckBox = itemView.findViewById(R.id.myCheckBox)
 
     }
 
@@ -30,9 +32,13 @@ class CityAdapter (
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val card = dataset[position]
-        holder.TitleText.text = card.CityName
-        holder.ContentText.text = card.WeatherCondition
+        val data = dataset[position]
+        holder.TitleText.text = data.CityName
+        holder.ContentText.text = data.WeatherCondition
+        holder.TempText.text = data.Temperature.toString()
+        holder.checkBox.isChecked = false
+        holder.checkBox.id = data.number
+        holder.checkBox.visibility = View.INVISIBLE
     }
 
 }
