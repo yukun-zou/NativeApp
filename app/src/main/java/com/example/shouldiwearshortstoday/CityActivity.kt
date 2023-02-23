@@ -20,19 +20,19 @@ import kotlin.reflect.typeOf
 
 
 class CityActivity: AppCompatActivity() {
-
+    val citylist =  mutableListOf<CityData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.city_page)
-        val weather = Weather()
-        val storage = Storage(this)
+        var weather = Weather()
+        var storage = Storage(this)
         val recycleView = findViewById<RecyclerView>(R.id.Recycle)
-        val layoutManager = LinearLayoutManager(this)
+        var layoutManager = LinearLayoutManager(this)
         recycleView.layoutManager = layoutManager
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 var cities = storage.cities
-                val citylist =  mutableListOf<CityData>()
+                var citylist =  mutableListOf<CityData>()
                 var i =0;
                 for(k in cities){
                     val cityname = k.key

@@ -37,6 +37,11 @@ class CityAdapter (private val dataset: List<CityData>
         holder.TitleText.text = data.CityName
         holder.ContentText.text = data.WeatherCondition
         holder.TempText.text = data.Temperature
+        holder.button.visibility = View.VISIBLE
+    }
+
+    fun toggle(holder: ItemViewHolder){
+        holder.button.visibility = View.INVISIBLE
     }
 
 }
