@@ -3,6 +3,7 @@ package com.example.shouldiwearshortstoday
 import android.content.Context
 import android.content.SharedPreferences
 
+
 class Storage(context: Context) {
     private val APP_PREF_VALUES= "com.example.shouldiwearshortstoday.values"
     private val preferences: SharedPreferences = context.getSharedPreferences(APP_PREF_VALUES,Context.MODE_PRIVATE)

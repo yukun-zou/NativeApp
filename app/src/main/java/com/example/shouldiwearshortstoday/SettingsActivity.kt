@@ -14,13 +14,12 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
-
 class SettingsActivity : AppCompatActivity() {
-
+    private lateinit var storage : Storage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.setting)
-
+        storage = Storage(this)
         val showPopupButton = findViewById<Button>(R.id.setting_popup)
 
         showPopupButton.setOnClickListener {
@@ -54,9 +53,9 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             popupView.findViewById<Button>(R.id.button_save).setOnClickListener {
-                val inputText1 = startTimeEditText.text.toString()
-                val inputText2 = endTimeEditText.text.toString()
-                Toast.makeText(this, "Input Text: $inputText1 $inputText2", Toast.LENGTH_SHORT).show()
+                val inputText1 = startTimeEditText.text.toString().toInt()
+                val inputText2 = endTimeEditText.text.toString().toInt()
+                storage.setDefaultStartEnd(inputText1, inputText2)
 
                 popupWindow.dismiss()
             }
