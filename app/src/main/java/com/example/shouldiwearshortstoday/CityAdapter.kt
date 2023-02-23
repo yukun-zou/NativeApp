@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CityAdapter (private val dataset: List<CityData>
     ):RecyclerView.Adapter<CityAdapter.ItemViewHolder>(){
+    private var showButton = false
     class ItemViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
         val TitleText: TextView = view.findViewById(R.id.titleTextView)
         val ContentText:TextView = view.findViewById(R.id.descriptionTextView)
@@ -37,11 +38,12 @@ class CityAdapter (private val dataset: List<CityData>
         holder.TitleText.text = data.CityName
         holder.ContentText.text = data.WeatherCondition
         holder.TempText.text = data.Temperature
-        holder.button.visibility = View.VISIBLE
+        holder.button.visibility = if (showButton) View.VISIBLE else View.INVISIBLE
     }
 
-    fun toggle(holder: ItemViewHolder){
-        holder.button.visibility = View.INVISIBLE
+    fun toggle(){
+        showButton = !showButton
+        notifyDataSetChanged()
     }
 
 }

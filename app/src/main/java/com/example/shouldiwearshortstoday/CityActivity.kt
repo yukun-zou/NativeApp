@@ -21,6 +21,7 @@ import kotlin.reflect.typeOf
 
 class CityActivity: AppCompatActivity() {
     val citylist =  mutableListOf<CityData>()
+    private lateinit var adapter: CityAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.city_page)
@@ -45,7 +46,8 @@ class CityActivity: AppCompatActivity() {
                     citylist.add(CityData(i,cityname,wmoInterpreter(condition),temperature))
                 }
                 runOnUiThread {
-                    recycleView.adapter = CityAdapter(citylist)
+                     adapter= CityAdapter(citylist)
+                    recycleView.adapter = adapter
                 }
             } catch (e: Exception) {
                 Log.e("OpenWeatherActivity", "Error retrieving weather data", e)
@@ -163,6 +165,7 @@ class CityActivity: AppCompatActivity() {
     fun changeActivity(view: View){
         val plusButton:ImageView = findViewById((R.id.plusbutton));
         val text:TextView = findViewById(R.id.changCity)
+        adapter.toggle()
         if(plusButton.visibility == View.GONE){
             plusButton.visibility = View.VISIBLE
             text.visibility = View.GONE
