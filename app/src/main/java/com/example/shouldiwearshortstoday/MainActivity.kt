@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
         layout.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
             override fun onSwipeLeft() {
                 super.onSwipeLeft()
-                storage.swipeLeft()
+                storage.swipeRight()
                 getWeather()
                 updateNavbar()
             }
             override fun onSwipeRight() {
                 super.onSwipeRight()
-                storage.swipeRight()
+                storage.swipeLeft()
                 getWeather()
                 updateNavbar()
             }

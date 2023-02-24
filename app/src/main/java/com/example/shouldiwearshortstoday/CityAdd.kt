@@ -20,6 +20,7 @@ class CityAdd: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addcitypage)
         storage = Storage(this)
+        storage.getValuesFromStorage()
         weather = Weather()
     }
 
