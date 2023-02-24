@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currentCity).text = storage.currentCity
     }
 
-    fun openChangingclothes() {
+    fun openChangingclothes(view: View) {
         val intent = Intent(this, Changingactivity::class.java)
         startActivity(intent)
     }
