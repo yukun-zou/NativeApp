@@ -163,8 +163,6 @@ class MainActivity : AppCompatActivity() {
     }
 
         fun openWeatherActivity(view: View) {
-            val weather = Weather()
-            val storage = Storage(this)
             val coord = storage.cities.get(storage.currentCity)
             val lat = coord!![0]
             val lon = coord!![1]
