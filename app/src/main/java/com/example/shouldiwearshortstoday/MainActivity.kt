@@ -1,10 +1,8 @@
 package com.example.shouldiwearshortstoday
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,12 +14,8 @@ import android.widget.*
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.google.android.material.slider.RangeSlider
 import kotlinx.coroutines.*
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onSwipeUp() {
                 super.onSwipeUp()
-
+                openWeatherActivity()
             }
             override fun onSwipeDown() {
                 super.onSwipeDown()
@@ -182,6 +176,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    fun openWeatherActivity() {
+        val coord = storage.cities.get(storage.currentCity)
+        val lat = coord!![0]
+        val lon = coord!![1]
+
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val weatherResponse = weather.getWeatherAPI(lat.toString(), lon.toString())
+
+
+                val temperature = weatherResponse.getJSONObject("current_weather").getString("temperature")
+                val condition = weatherResponse.getJSONObject("current_weather").getInt("weathercode")
+                val weatherCondition = wmoInterpreter(condition)
+                showWeatherPopup(temperature, weatherCondition)
+            } catch (e: Exception) {
+                Log.e("OpenWeatherActivity", "Error retrieving weather data", e)
+            }
+        }
+    }
         //val intent = Intent(this, WeatherActivity::class.java)
         //startActivity(intent)
 
@@ -201,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currentCity).text = storage.currentCity
     }
 
-    fun openChangingclothes(view: View) {
+    fun openChangingclothes() {
         val intent = Intent(this, Changingactivity::class.java)
         startActivity(intent)
     }
