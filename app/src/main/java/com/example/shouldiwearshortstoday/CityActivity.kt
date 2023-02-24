@@ -27,12 +27,15 @@ class CityActivity: AppCompatActivity() {
         setContentView(R.layout.city_page)
         var weather = Weather()
         var storage = Storage(this)
+        storage.getValuesFromStorage()
         val recycleView = findViewById<RecyclerView>(R.id.Recycle)
         var layoutManager = LinearLayoutManager(this)
         recycleView.layoutManager = layoutManager
         lifecycleScope.launch(Dispatchers.IO) {
             try {
+                 storage.getValuesFromStorage()
                 var cities = storage.cities
+                println(cities)
                 var citylist =  mutableListOf<CityData>()
                 var i =0;
                 for(k in cities){

@@ -38,6 +38,7 @@ class CityAdd: AppCompatActivity() {
             dialog.show()
         }
         else{
+            storage.getValuesFromStorage()
             storage.addCity(editText.text.toString(),getCityCoordinates(editText.text.toString())!!.first.toInt(),getCityCoordinates(editText.text.toString())!!.second.toInt())
             val builder = AlertDialog.Builder(this)
             builder.setTitle("reminding")

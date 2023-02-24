@@ -37,7 +37,7 @@ class CityAdapter (private val dataset: List<CityData>
         val data = dataset[position]
         holder.TitleText.text = data.CityName
         holder.ContentText.text = data.WeatherCondition
-        holder.TempText.text = data.Temperature
+        holder.TempText.text = "${data.Temperature}°"
         holder.button.visibility = if (showButton) View.VISIBLE else View.INVISIBLE
     }
 
