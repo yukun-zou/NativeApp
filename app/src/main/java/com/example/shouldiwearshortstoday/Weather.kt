@@ -140,7 +140,7 @@ class Weather{
         }
     }
 
-    private suspend fun getLocationAPI(city: String): JSONObject {
+    suspend fun getLocationAPI(city: String): JSONObject {
         return withContext(Dispatchers.IO) {
             var address = "https://geocoding-api.open-meteo.com/v1/search?name=€NAME"
             address = address.replace("€NAME", city)

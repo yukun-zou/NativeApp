@@ -7,14 +7,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.slider.RangeSlider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 
 
 class CityAdd: AppCompatActivity() {
     private lateinit var storage : Storage
+    private lateinit var weather : Weather
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addcitypage)
         storage = Storage(this)
+        weather = Weather()
     }
 
     fun closeSettingsActivity(view: View) {
@@ -26,9 +32,41 @@ class CityAdd: AppCompatActivity() {
         startActivity(intent)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun ConfirmActivity(view: View){
         val editText = findViewById<EditText>(R.id.edittext)
-        if(getCityCoordinates(editText.text.toString())==null){
+        val cityname = editText.text.toString()
+        val weatherCoroutine = lifecycleScope.async {
+            weather.getLocationAPI(cityname)
+        }
+        weatherCoroutine.invokeOnCompletion {
+            val result = weatherCoroutine.getCompleted()
+            if(result.has("results")) {
+                val lat = result.getJSONArray("results").getJSONObject(0).getInt("latitude")
+                val long = result.getJSONArray("results").getJSONObject(0).getInt("longitude")
+                storage.addCity(cityname, lat, long)
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("reminding")
+                builder.setMessage("Adding success")
+                builder.setPositiveButton("OK") { dialog, which ->
+                    val intent = Intent(this, CityActivity::class.java)
+                    startActivity(intent)
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+            else{
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Warning")
+                builder.setMessage("The cityname is spilt wrong, please retry")
+                builder.setPositiveButton("OK") { dialog, which ->
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+        }
+
+        /*if(getCityCoordinates(editText.text.toString())==null){
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Warning")
             builder.setMessage("The cityname is spilt wrong, please retry")
@@ -49,10 +87,10 @@ class CityAdd: AppCompatActivity() {
             }
             val dialog = builder.create()
             dialog.show()
-        }
+        }*/
     }
 
-    fun getCityCoordinates(cityName: String): Pair<Double, Double>? {
+    /*fun getCityCoordinates(cityName: String): Pair<Double, Double>? {
         val geocoder = Geocoder(this)
         val addresses = geocoder.getFromLocationName(cityName, 1)
 
@@ -64,5 +102,5 @@ class CityAdd: AppCompatActivity() {
             return null
         }
     }
-
+       */
 }
