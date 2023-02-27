@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 
@@ -17,11 +16,12 @@ import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private var mVelocityTracker: VelocityTracker? = null
-    private lateinit var storage : Storage
+    private lateinit var storage: Storage
     private lateinit var layout: RelativeLayout
-    private  lateinit var weather: Weather
+    private lateinit var weather: Weather
     private var temp: String = "5"
-    private var condition:String = "Clear Sky"
+    private var condition: String = "Clear Sky"
+    private var clothingType: String = "comfortable"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,16 +41,19 @@ class MainActivity : AppCompatActivity() {
                 getWeather()
                 updateNavbar()
             }
+
             override fun onSwipeRight() {
                 super.onSwipeRight()
                 storage.swipeLeft()
                 getWeather()
                 updateNavbar()
             }
+
             override fun onSwipeUp() {
                 super.onSwipeUp()
                 openWeatherActivity()
             }
+
             override fun onSwipeDown() {
                 super.onSwipeDown()
 
@@ -64,27 +67,32 @@ class MainActivity : AppCompatActivity() {
                 getWeather()
                 updateNavbar()
             }
+
             override fun onSwipeRight() {
                 super.onSwipeRight()
                 storage.swipeLeft()
                 getWeather()
                 updateNavbar()
             }
+
             override fun onSwipeUp() {
                 super.onSwipeUp()
                 openWeatherActivity()
             }
+
             override fun onSwipeDown() {
                 super.onSwipeDown()
 
             }
-            override fun onClick(){
-              openChangingclothes(findViewById(R.id.mannequin))
+
+            override fun onClick() {
+                openChangingclothes(findViewById(R.id.mannequin))
             }
         })
         getCurrentWeather()
     }
-    fun getCurrentWeather(){
+
+    fun getCurrentWeather() {
         val weatherCoroutine = lifecycleScope.async {
             val coord = storage.cities.get(storage.currentCity)
             val lat = coord!![0]
@@ -92,11 +100,12 @@ class MainActivity : AppCompatActivity() {
             weather.getCurrentWeather(lat, long)
         }
         weatherCoroutine.invokeOnCompletion {
-            val c =weatherCoroutine.getCompleted()
+            val c = weatherCoroutine.getCompleted()
             temp = c[0]
             condition = c[1]
         }
     }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getWeather() {
         val weatherCoroutine = lifecycleScope.async {
@@ -152,6 +161,7 @@ class MainActivity : AppCompatActivity() {
     fun setClothing(weather: Array<String>) {
         val umbrella = weather[1]
         val tempType = weather[0]
+        clothingType = tempType
         val clothes = setClothingToInvisible()
         if (tempType == "freezing") {
             clothes[0].visibility = View.VISIBLE
@@ -193,12 +203,13 @@ class MainActivity : AppCompatActivity() {
             weather.getCurrentWeather(lat, long)
         }
         weatherCoroutine.invokeOnCompletion {
-            val c =weatherCoroutine.getCompleted()
+            val c = weatherCoroutine.getCompleted()
             showWeatherPopup(c[0], c[1])
         }
     }
+
     fun openWeatherActivity() {
-        showWeatherPopup(temp,condition)
+        showWeatherPopup(temp, condition)
     }
 
     fun updateNavbar() {
@@ -253,4 +264,50 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun showFeedback(view: View) {
+        runOnUiThread {
+            val feedbackView = LayoutInflater.from(this).inflate(R.layout.feedback_window, null)
+            val feedbackWindow = PopupWindow(
+                feedbackView,
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_PARENT
+            )
+            feedbackWindow.setBackgroundDrawable(ColorDrawable(Color.parseColor("#80808080")))
+            feedbackWindow.isFocusable = true
+
+
+            feedbackWindow.showAtLocation(
+                findViewById(android.R.id.content),
+                Gravity.CENTER,
+                0,
+                0
+            )
+            val comfortable = feedbackView.findViewById<Button>(R.id.comfortable_button)
+            comfortable.setOnClickListener {
+                feedbackWindow.dismiss()
+            }
+            val warm = feedbackView.findViewById<Button>(R.id.toowarm_button)
+            warm.setOnClickListener {
+                if(clothingType.equals("freezing")) storage.freezing -= 2
+                else if(clothingType.equals("cold")) storage.cold -= 2
+                else if(clothingType.equals("comfortable")) storage.comfortable -= 2
+                else if(clothingType.equals("warm")) storage.warm -= 2
+                storage.setTempType()
+                feedbackWindow.dismiss()
+            }
+            val cold = feedbackView.findViewById<Button>(R.id.toocold_button)
+            cold.setOnClickListener {
+                if(clothingType.equals("hot")) storage.warm += 2
+                else if(clothingType.equals("cold")) storage.freezing += 2
+                else if(clothingType.equals("comfortable")) storage.cold += 2
+                else if(clothingType.equals("warm")) storage.comfortable += 2
+                storage.setTempType()
+                feedbackWindow.dismiss()
+            }
+            val cancelButton = feedbackView.findViewById<Button>(R.id.ok_button)
+            cancelButton.setOnClickListener {
+                feedbackWindow.dismiss()
+            }
+        }
+    }
 }

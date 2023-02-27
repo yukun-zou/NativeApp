@@ -11,4 +11,6 @@
     <color name="slider_track_active">#73A273</color>
     <color name="slider_thumb">#F7F3F4</color>
     <color name="slider_halo">#D5E7DC</color>
+    <color name="bntfeedbacktext">#000000</color>
+    <color name="bntfeedbackbackground">#F7F3F4</color>
 </resources>

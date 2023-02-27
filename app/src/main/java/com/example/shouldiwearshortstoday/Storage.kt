@@ -41,6 +41,14 @@ class Storage(context: Context) {
         umbrella = preferences.getInt("shorts", R.drawable.umbrella)
         stringToCities(preferences.getString("cities", "Stockholm,60,18").toString())
     }
+    fun setTempType(){
+        val edit = preferences.edit()
+        edit.putInt("freezing", freezing)
+        edit.putInt("cold", cold)
+        edit.putInt("comfortable", comfortable)
+        edit.putInt("warm", warm)
+        edit.apply()
+    }
     fun stringToCities(string: String){
         val listOfCities = string.split(";")
         var cMap = mutableMapOf<String, Array<Int>>()

@@ -2,5 +2,7 @@
     <string name="app_name">ShouldIWearShortsToday</string>
     <string name="slider_text">Slider to choose a time frame</string>
     <string name="default_time">Default Time</string>
-
+    <string name="toocold">too cold</string>
+    <string name="toowarm">too warm</string>
+    <string name="comfortable">comfortable</string>
 </resources>
