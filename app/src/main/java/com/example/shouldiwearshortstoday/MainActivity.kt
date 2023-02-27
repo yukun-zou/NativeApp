@@ -6,10 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.VelocityTracker
-import android.view.View
+import android.view.*
 import android.widget.*
 
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +54,32 @@ class MainActivity : AppCompatActivity() {
             override fun onSwipeDown() {
                 super.onSwipeDown()
 
+            }
+        })
+        var mannequin = findViewById<ImageView>(R.id.mannequin)
+        mannequin.setOnTouchListener(object : OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                storage.swipeRight()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeRight() {
+                super.onSwipeRight()
+                storage.swipeLeft()
+                getWeather()
+                updateNavbar()
+            }
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+                openWeatherActivity()
+            }
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+
+            }
+            override fun onClick(){
+              openChangingclothes(findViewById(R.id.mannequin))
             }
         })
         getCurrentWeather()
