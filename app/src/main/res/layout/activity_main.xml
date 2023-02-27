@@ -23,14 +23,14 @@
         android:id="@+id/mannequin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="openChangingclothes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.268"
-        app:srcCompat="@drawable/mannequin"
-        android:onClick="openChangingclothes"/>
+        app:srcCompat="@drawable/mannequin" />
 
     <ImageView
         android:id="@+id/hat"
@@ -140,18 +140,18 @@
         android:stepSize="1.0"
         android:valueFrom="0.0"
         android:valueTo="24.0"
+        app:haloColor="@color/slider_halo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.834"
-        app:values="@array/initial_slider_values"
         app:thumbColor="@color/slider_thumb"
         app:tickVisible="false"
-        app:trackColorInactive="@color/slider_track"
         app:trackColorActive="@color/slider_track_active"
-        app:haloColor="@color/slider_halo"/>
+        app:trackColorInactive="@color/slider_track"
+        app:values="@array/initial_slider_values" />
 
     <TextView
         android:id="@+id/currentCity"
@@ -167,7 +167,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022"/>
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/cityIndicator"
@@ -220,9 +220,9 @@
         android:layout_height="62dp"
         android:layout_marginStart="166dp"
         android:layout_marginBottom="16dp"
+        android:onClick="openWeatherActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/thermometer"
-        android:onClick="openWeatherActivity" />
+        app:srcCompat="@drawable/thermometer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
