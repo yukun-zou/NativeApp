@@ -59,7 +59,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="54dp"
         android:visibility="gone"
-        android:onClick="AddActivity"
+        android:onClick="addActivity"
         app:layout_constraintEnd_toStartOf="@+id/changeButton"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_plus"

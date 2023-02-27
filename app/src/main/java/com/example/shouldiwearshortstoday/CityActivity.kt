@@ -56,6 +56,12 @@ class CityActivity: AppCompatActivity() {
                 Log.e("OpenWeatherActivity", "Error retrieving weather data", e)
             }
         }
+        recycleView.setOnTouchListener(object : OnSwipeTouchListener(this@CityActivity) {
+            override fun onLongClick() {
+                super.onSwipeDown()
+                changeActivity(recycleView)
+            }
+        })
 
     }
 
@@ -187,7 +193,7 @@ class CityActivity: AppCompatActivity() {
     }
 
 
-    fun AddActivity(view: View){
+    fun addActivity(view: View){
 //        println(getCityCoordinates("Stockholm"))
         val intent = Intent(this, CityAdd::class.java)
         startActivity(intent)
