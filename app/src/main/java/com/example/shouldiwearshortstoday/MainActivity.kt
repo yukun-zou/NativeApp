@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var storage : Storage
     private lateinit var layout: RelativeLayout
     private  lateinit var weather: Weather
+    private var temp: String = "5"
+    private var condition:String = "Clear Sky"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,8 +59,21 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+        getCurrentWeather()
     }
-
+    fun getCurrentWeather(){
+        val weatherCoroutine = lifecycleScope.async {
+            val coord = storage.cities.get(storage.currentCity)
+            val lat = coord!![0]
+            val long = coord!![1]
+            weather.getCurrentWeather(lat, long)
+        }
+        weatherCoroutine.invokeOnCompletion {
+            val c =weatherCoroutine.getCompleted()
+            temp = c[0]
+            condition = c[1]
+        }
+    }
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getWeather() {
         val weatherCoroutine = lifecycleScope.async {
@@ -160,25 +175,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun openWeatherActivity() {
-        val coord = storage.cities.get(storage.currentCity)
-        val lat = coord!![0]
-        val lon = coord!![1]
-
-        val weatherCoroutine = lifecycleScope.async {
-            val coord = storage.cities.get(storage.currentCity)
-            val lat = coord!![0]
-            val long = coord!![1]
-            weather.getCurrentWeather(lat, long)
-        }
-        weatherCoroutine.invokeOnCompletion {
-            val c =weatherCoroutine.getCompleted()
-            showWeatherPopup(c[0], c[1])
-        }
+        showWeatherPopup(temp,condition)
     }
-        //val intent = Intent(this, WeatherActivity::class.java)
-        //startActivity(intent)
-
-
 
     fun updateNavbar() {
         val currentCityIndex = storage.cities.keys.indexOf(storage.currentCity)
@@ -209,10 +207,10 @@ class MainActivity : AppCompatActivity() {
             val weatherView = LayoutInflater.from(this).inflate(R.layout.weather_window, null)
             val weatherWindow = PopupWindow(
                 weatherView,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_PARENT
             )
-            weatherWindow.setBackgroundDrawable(ColorDrawable(Color.parseColor("#80FFFFFF")))
+            weatherWindow.setBackgroundDrawable(ColorDrawable(Color.parseColor("#80808080")))
             weatherWindow.isFocusable = true
 
 
