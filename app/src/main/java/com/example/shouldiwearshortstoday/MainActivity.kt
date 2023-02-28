@@ -1,11 +1,13 @@
 package com.example.shouldiwearshortstoday
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var temp: String = "5"
     private var condition: String = "Clear Sky"
     private var clothingType: String = "comfortable"
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -97,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         storage = Storage(this)
         initValues()
+        getCurrentWeather()
     }
 
     fun getCurrentWeather() {
