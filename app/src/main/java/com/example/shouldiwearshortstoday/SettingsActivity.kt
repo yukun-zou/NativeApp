@@ -1,6 +1,8 @@
 package com.example.shouldiwearshortstoday
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -62,7 +64,19 @@ class SettingsActivity : AppCompatActivity() {
         }
 
     }
+    fun storageReset(view: View){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Caution!")
+        builder.setMessage("All settings and values will be reset and lost forever.")
+        builder.setPositiveButton("OK") { dialog, which ->
+            storage.resetAll()
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
 
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
     fun closeSettingsActivity(view: View) {
         finish()
     }

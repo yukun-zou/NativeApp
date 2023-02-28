@@ -58,8 +58,8 @@ class CityAdd: AppCompatActivity() {
             }
             else{
                 val builder = AlertDialog.Builder(this)
-                builder.setTitle("Warning")
-                builder.setMessage("The cityname is spilt wrong, please retry")
+                builder.setTitle("Warning!")
+                builder.setMessage("The cityname is spelt incorrectly, please retry")
                 builder.setPositiveButton("OK") { dialog, which ->
                 }
                 val dialog = builder.create()

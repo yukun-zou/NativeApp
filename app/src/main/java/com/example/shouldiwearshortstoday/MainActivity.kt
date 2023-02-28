@@ -1,5 +1,6 @@
 package com.example.shouldiwearshortstoday
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -90,6 +91,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
         getCurrentWeather()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        storage = Storage(this)
+        initValues()
     }
 
     fun getCurrentWeather() {
@@ -284,7 +291,14 @@ class MainActivity : AppCompatActivity() {
             )
             val comfortable = feedbackView.findViewById<Button>(R.id.comfortable_button)
             comfortable.setOnClickListener {
-                feedbackWindow.dismiss()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Thank you")
+                builder.setMessage("The algorithm has been adjusted")
+                builder.setPositiveButton("OK") { dialog, which ->
+                    feedbackWindow.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
             val warm = feedbackView.findViewById<Button>(R.id.toowarm_button)
             warm.setOnClickListener {
@@ -293,7 +307,14 @@ class MainActivity : AppCompatActivity() {
                 else if(clothingType.equals("comfortable")) storage.comfortable -= 2
                 else if(clothingType.equals("warm")) storage.warm -= 2
                 storage.setTempType()
-                feedbackWindow.dismiss()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Thank you")
+                builder.setMessage("The algorithm has been adjusted")
+                builder.setPositiveButton("OK") { dialog, which ->
+                    feedbackWindow.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
             val cold = feedbackView.findViewById<Button>(R.id.toocold_button)
             cold.setOnClickListener {
@@ -302,7 +323,14 @@ class MainActivity : AppCompatActivity() {
                 else if(clothingType.equals("comfortable")) storage.cold += 2
                 else if(clothingType.equals("warm")) storage.comfortable += 2
                 storage.setTempType()
-                feedbackWindow.dismiss()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Thank you")
+                builder.setMessage("The algorithm has been adjusted")
+                builder.setPositiveButton("OK") { dialog, which ->
+                    feedbackWindow.dismiss()
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
             val cancelButton = feedbackView.findViewById<Button>(R.id.ok_button)
             cancelButton.setOnClickListener {

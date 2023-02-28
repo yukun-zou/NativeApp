@@ -49,6 +49,26 @@ class Storage(context: Context) {
         edit.putInt("warm", warm)
         edit.apply()
     }
+    fun resetAll(){
+        val edit = preferences.edit()
+        edit.putString("currentCity", "Stockholm").toString()
+        edit.putInt("defaultStart", 8)
+        edit.putInt("defaultEnd", 18)
+        edit.putInt("freezing", 0)
+        edit.putInt("cold", 10)
+        edit.putInt("comfortable", 15)
+        edit.putInt("warm", 23)
+        edit.putInt("hat", R.drawable.hat)
+        edit.putInt("scarf", R.drawable.scarf)
+        edit.putInt("hoodie", R.drawable.hoodie)
+        edit.putInt("tshirt", R.drawable.tshirt)
+        edit.putInt("winterJacket", R.drawable.winter_jacket)
+        edit.putInt("trousers", R.drawable.trousers)
+        edit.putInt("shorts", R.drawable.shorts)
+        edit.putInt("shorts", R.drawable.umbrella)
+        edit.putString("cities", citiesToString())
+        edit.apply()
+    }
     fun stringToCities(string: String){
         val listOfCities = string.split(";")
         var cMap = mutableMapOf<String, Array<Int>>()
