@@ -42,28 +42,29 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Recycle"
-        android:layout_width="397dp"
-        android:layout_height="720dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeButton"
         app:layout_constraintVertical_bias="0.789" />
 
     <ImageView
         android:id="@+id/plusbutton"
         android:layout_width="277dp"
         android:layout_height="38dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:onClick="addActivity"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/changeButton"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.777"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.014"
         app:srcCompat="@drawable/search_bar"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
