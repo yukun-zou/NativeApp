@@ -5,12 +5,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.slider.RangeSlider
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var temp: String = "5"
     private var condition: String = "Clear Sky"
     private var clothingType: String = "comfortable"
+    private var shownNoInternet: Boolean = false
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,36 +102,67 @@ class MainActivity : AppCompatActivity() {
         initValues()
         getCurrentWeather()
     }
-
+    private fun isNetworkConnected(): Boolean {
+        val connManager = this.applicationContext.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connManager.getNetworkCapabilities(connManager.activeNetwork)
+        return networkCapabilities != null
+    }
     fun getCurrentWeather() {
-        val weatherCoroutine = lifecycleScope.async {
-            val coord = storage.cities.get(storage.currentCity)
-            val lat = coord!![0]
-            val long = coord!![1]
-            weather.getCurrentWeather(lat, long)
+        if(isNetworkConnected()) {
+            val weatherCoroutine = lifecycleScope.async {
+                val coord = storage.cities.get(storage.currentCity)
+                val lat = coord!![0]
+                val long = coord!![1]
+                weather.getCurrentWeather(lat, long)
+            }
+            weatherCoroutine.invokeOnCompletion {
+                val c = weatherCoroutine.getCompleted()
+                temp = c[0]
+                condition = c[1]
+            }
         }
-        weatherCoroutine.invokeOnCompletion {
-            val c = weatherCoroutine.getCompleted()
-            temp = c[0]
-            condition = c[1]
+        else{
+            showNetDialog()
         }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getWeather() {
-        val weatherCoroutine = lifecycleScope.async {
-            val startEnd = findViewById<RangeSlider>(R.id.slider).values
-            val coord = storage.cities.get(storage.currentCity)
-            val lat = coord!![0]
-            val long = coord!![1]
-            weather.clothingAlgorithm(startEnd[0].toInt(), startEnd[1].toInt(), lat, long, storage)
+        if(isNetworkConnected()) {
+            val weatherCoroutine = lifecycleScope.async {
+                val startEnd = findViewById<RangeSlider>(R.id.slider).values
+                val coord = storage.cities.get(storage.currentCity)
+                val lat = coord!![0]
+                val long = coord!![1]
+                weather.clothingAlgorithm(
+                    startEnd[0].toInt(),
+                    startEnd[1].toInt(),
+                    lat,
+                    long,
+                    storage
+                )
+            }
+            weatherCoroutine.invokeOnCompletion {
+                setClothing(weatherCoroutine.getCompleted())
+            }
         }
-        weatherCoroutine.invokeOnCompletion {
-            setClothing(weatherCoroutine.getCompleted())
+        else{
+            showNetDialog()
         }
-
     }
-
+    fun showNetDialog(){
+        if(!shownNoInternet) {
+            shownNoInternet = true
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("No Internet Connection")
+            builder.setMessage("Can't retrieve weather data")
+            builder.setPositiveButton("OK") { dialog, which ->
+                shownNoInternet = false
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
     fun initValues() {
         storage.getValuesFromStorage()
         val slider = findViewById<RangeSlider>(R.id.slider)
@@ -206,16 +237,20 @@ class MainActivity : AppCompatActivity() {
         val coord = storage.cities.get(storage.currentCity)
         val lat = coord!![0]
         val lon = coord!![1]
-
-        val weatherCoroutine = lifecycleScope.async {
-            val coord = storage.cities.get(storage.currentCity)
-            val lat = coord!![0]
-            val long = coord!![1]
-            weather.getCurrentWeather(lat, long)
+        if(isNetworkConnected()) {
+            val weatherCoroutine = lifecycleScope.async {
+                val coord = storage.cities.get(storage.currentCity)
+                val lat = coord!![0]
+                val long = coord!![1]
+                weather.getCurrentWeather(lat, long)
+            }
+            weatherCoroutine.invokeOnCompletion {
+                val c = weatherCoroutine.getCompleted()
+                showWeatherPopup(c[0], c[1])
+            }
         }
-        weatherCoroutine.invokeOnCompletion {
-            val c = weatherCoroutine.getCompleted()
-            showWeatherPopup(c[0], c[1])
+        else{
+            showNetDialog()
         }
     }
 
