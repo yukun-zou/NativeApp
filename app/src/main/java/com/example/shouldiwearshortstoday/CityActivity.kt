@@ -30,6 +30,9 @@ class CityActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.city_page)
+        init()
+    }
+    fun init(){
         var weather = Weather()
         var storage = Storage(this)
         storage.getValuesFromStorage()
@@ -70,7 +73,6 @@ class CityActivity: AppCompatActivity() {
         else {
             showNetDialog()
         }
-
     }
     fun showNetDialog(){
         if(!shownNoInternet) {
@@ -122,6 +124,23 @@ class CityActivity: AppCompatActivity() {
         val intent = Intent(this, CityAdd::class.java)
         startActivity(intent)
     }
-
-
+    fun deleteCity(view: View) {
+        val storage = Storage(this)
+        storage.getValuesFromStorage()
+        if(storage.cities.size > 1){
+            val parent = view.parent as View
+            val text = parent.findViewById<TextView>(R.id.titleTextView).text.toString()
+            storage.deleteCity(text)
+            init()
+        }
+        else{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Error")
+            builder.setMessage("You have to have at least one city")
+            builder.setPositiveButton("OK") { dialog, which ->
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
 }
