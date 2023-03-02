@@ -119,6 +119,17 @@ class Storage(context: Context) {
         edit.putString("currentCity", currentCity)
         edit.apply()
     }
+    fun changeCityOrder(list: ArrayList<String>){
+        var cMap = mutableMapOf<String, Array<Int>>()
+        for(s in list){
+            cities[s]?.let { cMap.put(s, it) }
+        }
+        cities = cMap
+        val citiesString = citiesToString()
+        val edit = preferences.edit()
+        edit.putString("cities", citiesString)
+        edit.apply()
+    }
     fun swipeRight(){
         var currentCityIndex = cities.keys.indexOf(currentCity)
         currentCityIndex = (currentCityIndex + 1 + cities.size)%cities.size

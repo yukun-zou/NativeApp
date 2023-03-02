@@ -82,7 +82,7 @@ class CityActivity: AppCompatActivity() {
                                 val toPosition = target.adapterPosition
                                 Collections.swap(adapter.dataset, fromPosition, toPosition)
                                 adapter.notifyItemMoved(fromPosition, toPosition)
-                                var list = changeorder(fromPosition,toPosition)
+                                changeorder()
                                 return true
                             }
 
@@ -177,15 +177,14 @@ class CityActivity: AppCompatActivity() {
         }
     }
 
-    fun changeorder (fromPosition:Int,toPosition:Int) : ArrayList<String>{
+    fun changeorder (){
         var list = ArrayList<String>()
         for(city in citylist){
             list.add(city.CityName)
         }
-        var temp = list[fromPosition];
-        list.set(fromPosition,list[toPosition])
-        list.set(toPosition,temp);
-        return list
+        val storage = Storage(this)
+        storage.getValuesFromStorage()
+        storage.changeCityOrder(list)
     }
 
 }
