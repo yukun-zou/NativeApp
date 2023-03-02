@@ -178,11 +178,11 @@ class CityActivity: AppCompatActivity() {
     }
 
     fun changeorder (fromPosition:Int,toPosition:Int) : ArrayList<String>{
-        val list = ArrayList<String>()
+        var list = ArrayList<String>()
         for(city in citylist){
             list.add(city.CityName)
         }
-        val temp = list[fromPosition];
+        var temp = list[fromPosition];
         list.set(fromPosition,list[toPosition])
         list.set(toPosition,temp);
         return list
