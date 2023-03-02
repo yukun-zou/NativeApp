@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.RangeSlider
@@ -19,13 +20,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.reflect.typeOf
 
 
 class CityActivity: AppCompatActivity() {
-    val citylist =  mutableListOf<CityData>()
+    var citylist =  mutableListOf<CityData>()
     private lateinit var adapter: CityAdapter
     private var shownNoInternet: Boolean = false
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,7 @@ class CityActivity: AppCompatActivity() {
                     storage.getValuesFromStorage()
                     var cities = storage.cities
                     println(cities)
-                    var citylist = mutableListOf<CityData>()
+                    citylist = mutableListOf<CityData>()
                     var i = 0;
                     for (k in cities) {
                         val cityname = k.key
@@ -56,7 +61,35 @@ class CityActivity: AppCompatActivity() {
                         citylist.add(CityData(i, cityname, weatherResponse[1], weatherResponse[0]))
                     }
                     runOnUiThread {
-                        adapter = CityAdapter(citylist)
+
+                        val itemTouchCallback = object : ItemTouchHelper.Callback() {
+
+                            override fun isLongPressDragEnabled(): Boolean {
+                                return true
+                            }
+
+                            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                                // not used for drag and drop
+                            }
+
+                            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+                                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                                return makeMovementFlags(dragFlags, 0)
+                            }
+
+                            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                                val fromPosition = viewHolder.adapterPosition
+                                val toPosition = target.adapterPosition
+                                Collections.swap(adapter.dataset, fromPosition, toPosition)
+                                adapter.notifyItemMoved(fromPosition, toPosition)
+                                var list = changeorder(fromPosition,toPosition)
+                                return true
+                            }
+
+                        }
+                        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+                        adapter = CityAdapter(citylist,itemTouchHelper)
+                        itemTouchHelper.attachToRecyclerView(recycleView)
                         recycleView.adapter = adapter
                     }
                 } catch (e: Exception) {
@@ -143,4 +176,16 @@ class CityActivity: AppCompatActivity() {
             dialog.show()
         }
     }
+
+    fun changeorder (fromPosition:Int,toPosition:Int) : ArrayList<String>{
+        val list = ArrayList<String>()
+        for(city in citylist){
+            list.add(city.CityName)
+        }
+        val temp = list[fromPosition];
+        list.set(fromPosition,list[toPosition])
+        list.set(toPosition,temp);
+        return list
+    }
+
 }
