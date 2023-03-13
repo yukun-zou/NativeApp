@@ -38,7 +38,7 @@ class Storage(context: Context) {
         winterJacket = preferences.getInt("winterJacket", R.drawable.winter_jacket)
         trousers = preferences.getInt("trousers", R.drawable.trousers)
         shorts = preferences.getInt("shorts", R.drawable.shorts)
-        umbrella = preferences.getInt("shorts", R.drawable.umbrella)
+        umbrella = preferences.getInt("umbrella", R.drawable.umbrella)
         stringToCities(preferences.getString("cities", "Stockholm,60,18").toString())
     }
     fun setTempType(){
@@ -65,7 +65,7 @@ class Storage(context: Context) {
         edit.putInt("winterJacket", R.drawable.winter_jacket)
         edit.putInt("trousers", R.drawable.trousers)
         edit.putInt("shorts", R.drawable.shorts)
-        edit.putInt("shorts", R.drawable.umbrella)
+        edit.putInt("umbrella", R.drawable.umbrella)
         edit.putString("cities", citiesToString())
         edit.apply()
     }
