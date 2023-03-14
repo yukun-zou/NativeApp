@@ -57,12 +57,25 @@ class SettingsActivity : AppCompatActivity() {
             popupView.findViewById<Button>(R.id.button_save).setOnClickListener {
                 val inputText1 = startTimeEditText.text.toString().toInt()
                 val inputText2 = endTimeEditText.text.toString().toInt()
-                storage.setDefaultStartEnd(inputText1, inputText2)
+                if(inputText1 >= 0 && inputText2 <=24 && inputText1< inputText2)
+                    storage.setDefaultStartEnd(inputText1, inputText2)
+                else{
+                    incorrectInput()
+                }
 
                 popupWindow.dismiss()
             }
         }
 
+    }
+    fun incorrectInput(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Caution!")
+        builder.setMessage("The input was incorrect.")
+        builder.setPositiveButton("OK") { dialog, which ->
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
     fun storageReset(view: View){
         val builder = AlertDialog.Builder(this)

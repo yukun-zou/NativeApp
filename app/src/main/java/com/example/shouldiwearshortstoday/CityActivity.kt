@@ -163,6 +163,8 @@ class CityActivity: AppCompatActivity() {
         if(storage.cities.size > 1){
             val parent = view.parent as View
             val text = parent.findViewById<TextView>(R.id.titleTextView).text.toString()
+            if(text == storage.currentCity)
+                storage.swipeLeft()
             storage.deleteCity(text)
             init()
         }
