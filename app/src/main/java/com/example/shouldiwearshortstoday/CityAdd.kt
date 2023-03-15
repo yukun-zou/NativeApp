@@ -36,7 +36,7 @@ class CityAdd: AppCompatActivity() {
     @OptIn(ExperimentalCoroutinesApi::class)
     fun ConfirmActivity(view: View){
         val editText = findViewById<EditText>(R.id.edittext)
-        val cityname = editText.text.toString()
+        var cityname = editText.text.toString()
         val weatherCoroutine = lifecycleScope.async {
             weather.getLocationAPI(cityname)
         }
@@ -45,6 +45,7 @@ class CityAdd: AppCompatActivity() {
             if(result.has("results")) {
                 val lat = result.getJSONArray("results").getJSONObject(0).getInt("latitude")
                 val long = result.getJSONArray("results").getJSONObject(0).getInt("longitude")
+                cityname = cityname.replaceFirstChar { it.uppercase()}
                 storage.addCity(cityname, lat, long)
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("reminding")
